@@ -1,6 +1,6 @@
 # Specifications Document
 
-Project: Terraharbor
+Project: TerraHarbor
 Version: 0.1 – July 11, 2025  
 Branch: PDG
 
