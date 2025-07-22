@@ -71,14 +71,14 @@ The system must offer:
 ## 5. Preliminary Technical Architecture
 
 ```
-[Terraform Client] ──HTTP──> [Java API] ─┬─> [Encryption Service]
+[Terraform Client] ──HTTP──> [Python API] ─┬─> [Encryption Service]
                                        ├─> [Object Storage (S3)]
                                        └─> [PostgreSQL metadata]
                                                   ↑
                                 [React UI] <──────┘
 ```
 
-* **API**: [TODO: Java + frameworks] + Auth/JWT middleware?
+* **API**: Python with FastAPI framework + Auth/JWT ?
 * **Encryption**: TLS for packets, AES-256-GCM for at-rest states.
 * **Storage**: Azure / AWS Cloud.
 * **Metadata DB**: -
@@ -90,16 +90,16 @@ The system must offer:
 
 ## 6. Technological Choices
 
-| Domain             | Technology                         | Reason                           |
-| ------------------ | ---------------------------------- | -------------------------------- |
-| Backend language   |                                    |                                  |
-| API Framework      | Java                               |                                  |
-| Frontend           | React / Material UI                | SSR, rich ecosystem              |
-| CI/CD              | GitHub Actions                     | GitHub integration & marketplace |
-| IaC                | Terraform                          | Coherence with use case          |
-| Containers         | Docker                             | Standard                         |
-| Orchestration      | Docker Compose in VM / K8s         | Simplicity vs scalability        |
-| Tests              | Unit Testing, Cypress              | Unit & E2E                       |
+| Domain             | Technology                         | Reason                                                         |
+| ------------------ | ---------------------------------- | -------------------------------------------------------------- |
+| Backend language   | Python                             | No heavy calculatoion required, easy to handle and well-known  |
+| API Framework      | FastAPI                            | Really easy to use, handles Oauth2.                            |
+| Frontend           | React / Material UI                | SSR, rich ecosystem                                            |
+| CI/CD              | GitHub Actions                     | GitHub integration & marketplace                               |
+| IaC                | Terraform                          | Coherence with use case                                        |
+| Containers         | Docker                             | Standard                                                       |
+| Orchestration      | Docker Compose in VM / K8s         | Simplicity vs scalability                                      |
+| Tests              | Unit Testing, Cypress, pytest      | Unit & E2E                                                     |
 
 ## 7. Development Process
 
