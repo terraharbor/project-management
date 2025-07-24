@@ -18,6 +18,7 @@ The system must offer:
 ### 2.1 HTTP Backend
 
 * Endpoints compliant with the official spec: `GET/PUT/LOCK/UNLOCK/DELETE /state/{project}`.
+* Endpoints for authentication: `/register /login`
 * Management of *state* versions and metadata.
 * Encrypted *state* storage
 
@@ -72,17 +73,17 @@ The system must offer:
 
 ```
 [Terraform Client] ──HTTP──> [Python API] ─┬─> [Encryption Service]
-                                       ├─> [Object Storage (S3)]
-                                       └─> [PostgreSQL metadata]
-                                                  ↑
-                                [React UI] <──────┘
+                                 ↑     ├─> [Object Storage]
+                                 |     └─> [Data Storage]
+                                 |
+               [React UI] <──────┘
 ```
 
 * **API**: Python with FastAPI framework + Auth/JWT ?
 * **Encryption**: TLS for packets, AES-256-GCM for at-rest states.
 * **Storage**: Azure / AWS Cloud.
 * **Metadata DB**: -
-* **AuthN**: OAuth2 + JWT (access/refresh)?
+* **AuthN**: OAuth2 + JWT
 
 ### Optional 
 
@@ -94,7 +95,7 @@ The system must offer:
 | ------------------ | ---------------------------------- | -------------------------------------------------------------- |
 | Backend language   | Python                             | No heavy calculatoion required, easy to handle and well-known  |
 | API Framework      | FastAPI                            | Really easy to use, handles Oauth2.                            |
-| Frontend           | React / Material UI                | SSR, rich ecosystem                                            |
+| Frontend           | React / Vite / Material UI         | SSR, rich ecosystem                                            |
 | CI/CD              | GitHub Actions                     | GitHub integration & marketplace                               |
 | IaC                | Terraform                          | Coherence with use case                                        |
 | Containers         | Docker                             | Standard                                                       |
@@ -104,7 +105,7 @@ The system must offer:
 ## 7. Development Process
 
 * **Agile Kanban** method with weekly sprint reviews.
-* **Git Flow**: `main`, `develop`, *feature/*, *release/*.
+* **Git Flow**: `main`, *feature/*, *release/*.
 * Commit convention: **Conventional Commits**.
 * Mandatory code review (at least 1 approval) + optionally static analysis (linters).
 * **Definition of Done**: passing tests, >80% coverage, updated documentation.
@@ -146,14 +147,14 @@ The system must offer:
 * Secret storage via GitHub OIDC → HashiCorp Vault.
 * Headers: CSP, HSTS.
 * Rate limiting: 100 req/min/IP.
-* Multi-factor authentication for admin UI.
+* Multi-factor authentication for admin UI (?).
 
 ## 12. Risk Management
 
 | Risk                        | Impact          | Prob.     | Mitigation Plans                        |
 | -------------------------   | --------------- | ------    | --------------------------------------- |
 | Underestimating UI effort   | Delay           | Medium    | Prototype early, allocate dedicated FE  |
-| S3 performance              | Latency         | Low       | Bench early, cache CDN                  |
+| VM Performance              | Latency         | Low       | Bench early, cache CDN                  |
 | Encryption key failure      | Data loss       | Low       | Backup KMS + rotation doc               |
 
 ## 14. Acceptance Criteria
